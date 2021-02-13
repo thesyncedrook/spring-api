@@ -5,46 +5,39 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.lang.annotation.Documented;
+import java.time.LocalDateTime;
 
-
-@Document(collection = "transactions")
+@Document("transactions")
 public class Transaction {
-
     @Id
-    private String id;
+    private long id;
     private String accountNumber;
-    private String transactionTs;
+    private LocalDateTime transactionTs;
     private Double amount;
     private String transactionType;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
-
-    private Double balance;
-
-    public Transaction(String accountNumber, String transactionTs, Double amount, String transactionType,Double balance) {
+    public Transaction(long id, String accountNumber, LocalDateTime transactionTs, Double amount,
+                       String transactionType) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.transactionTs = transactionTs;
         this.amount = amount;
         this.transactionType = transactionType;
-        this.balance = balance;
     }
 
     public String getTransactionType() {
@@ -63,13 +56,15 @@ public class Transaction {
         this.accountNumber = accountNumber;
     }
 
-    public String getTransactionTs() {
+    public LocalDateTime getTransactionTs() {
         return transactionTs;
     }
 
-    public void setTransactionTs(String transactionTs) {
+    public void setTransactionTs(LocalDateTime transactionTs) {
         this.transactionTs = transactionTs;
     }
+
+
 
     public Double getAmount() {
         return amount;
